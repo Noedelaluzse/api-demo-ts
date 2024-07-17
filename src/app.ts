@@ -11,7 +11,9 @@ function main() {
   const server = new Server({
     port: envs.PORT,
     public_path: envs.PUBLIC_PATH,
-    routes: AppRoutes.routes
+    routes: AppRoutes.routes,
+    dbName: envs.MONGO_DB_NAME,
+    mongoUrl: envs.MONGO_URL
   });
 
   server.start();

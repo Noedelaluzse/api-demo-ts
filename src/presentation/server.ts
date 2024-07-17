@@ -1,11 +1,14 @@
 import express, {Router} from 'express';
 import cors from 'cors';
 import compression from 'compression';
+import { MongoDatabase } from '../data/mongo';
 
 interface Options {
   port: number;
   routes: Router,
   public_path?: string;
+  mongoUrl: string;
+  dbName: string;
 }
 
 export class Server {
@@ -15,16 +18,25 @@ export class Server {
   private readonly port: number;
   private readonly publicPath: string;
   private readonly routes: Router;
+  private readonly mongoUrl: string;
+  private readonly dbName: string;
 
 
   constructor(options: Options) {
-    const { port, routes, public_path='public' } = options;
+    const { port, routes, public_path='public', mongoUrl, dbName } = options;
     this.port = port;
     this.publicPath = public_path;
     this.routes = routes;
+    this.mongoUrl = mongoUrl;
+    this.dbName = dbName;
   }
 
   async start() {
+
+    await MongoDatabase.connect({
+      mongoUrl: this.mongoUrl,
+      dbName:  this.dbName
+    });
 
     // Middlewares
     this.app.use(cors());
