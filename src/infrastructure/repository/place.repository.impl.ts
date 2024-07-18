@@ -8,6 +8,9 @@ import { PlaceRepository } from "../../domain/repository/place.repository";
 export class PlaceRepositoryImpl implements PlaceRepository  {
 
   constructor( private datasource: PlaceDatasource ){}
+  createCategory(name: string): Promise<string> {
+    return this.datasource.createCategory(name);
+  }
 
   create(createPlaceDto: CreatePlaceDto): Promise<PlaceEntity> {
     return this.datasource.create(createPlaceDto);

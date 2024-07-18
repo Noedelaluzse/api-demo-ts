@@ -2,6 +2,7 @@ import { Router } from "express";
 import { PlaceDatasourceImpl } from "../../infrastructure/datasources";
 import { PlaceRepositoryImpl } from "../../infrastructure/repository";
 import { PlaceController } from "./controller";
+import { AuthMiddleware } from "../../domain/middlewares/auth.middlewares";
 
 
 export class PlaceRoutes {
@@ -14,11 +15,12 @@ export class PlaceRoutes {
     const placeRepository = new PlaceRepositoryImpl(datasource);
     const placeController = new PlaceController(placeRepository);
 
-    router.post('/', placeController.createPlace);
-    router.get('/', placeController.getAllPlaces);
-    router.put('/:id', placeController.updatePlace);
-    router.get('/:id', placeController.getPlace);
-    router.delete('/:id', placeController.deletePlace);
+    router.post('/',        [AuthMiddleware.validateJwt], placeController.createPlace);
+    router.post('/category',[AuthMiddleware.validateJwt], placeController.createCategory);
+    router.get('/',         [AuthMiddleware.validateJwt], placeController.getAllPlaces);
+    router.put('/:id',      [AuthMiddleware.validateJwt], placeController.updatePlace);
+    router.get('/:id',      [AuthMiddleware.validateJwt], placeController.getPlace);
+    router.delete('/:id',   [AuthMiddleware.validateJwt], placeController.deletePlace);
 
     return router;
   }

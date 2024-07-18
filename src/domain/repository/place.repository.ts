@@ -14,4 +14,7 @@ export abstract class PlaceRepository {
   
   abstract deleteById(id: string): Promise<string>;
 
+  abstract createCategory(name: string): Promise<string>;
+
+
 }

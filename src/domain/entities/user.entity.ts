@@ -3,7 +3,6 @@ export class UserEntity {
 
 
   constructor(
-    private readonly id: string,
     private readonly name: string,
     private readonly lastname: string,
     private readonly fullName: string,
@@ -17,7 +16,6 @@ export class UserEntity {
   static fromModelToEntity(object : {[key:string]: any}, token?: string) {
 
     const {
-      id,
       name,
       lastname,
       phone,
@@ -29,7 +27,6 @@ export class UserEntity {
     const fullName = `${name} ${lastname}`;
 
     return new UserEntity(
-      id,
       name,
       lastname,
       fullName,

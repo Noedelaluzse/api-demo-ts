@@ -9,9 +9,7 @@ export class UpdatePlaceDto {
     public readonly short_description: string,
     public readonly location: Location,
     public readonly long_description: string,
-    public readonly id_user: string,
-    public readonly categories: string[],
-    public readonly image_url: string = '',
+    public readonly categories: ObjectId[],
 
   ){}
 
@@ -22,7 +20,6 @@ export class UpdatePlaceDto {
      if (this.short_description !== undefined) returnObj.short_description = this.short_description;
      if (this.location !== undefined) returnObj.location = this.location;
      if (this.long_description !== undefined) returnObj.long_description = this.long_description;
-     if (this.id_user !== undefined) returnObj.id_user = this.id_user;
      if (this.categories !== undefined) returnObj.categories = this.categories;
 
      return returnObj;
@@ -35,7 +32,6 @@ export class UpdatePlaceDto {
       short_description,
       location,
       long_description,
-      id_user,
       categories,
     } = props;
 
@@ -46,7 +42,6 @@ export class UpdatePlaceDto {
       short_description,
       location,
       long_description,
-      id_user,
       categoryIds,
     )];
     

@@ -15,4 +15,6 @@ export abstract class PlaceDatasource {
   
   abstract deleteById(id: string): Promise<string>;
 
+  abstract createCategory(name: string): Promise<string>;
+
 }

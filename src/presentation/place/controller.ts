@@ -4,6 +4,7 @@ import { PlaceRepository } from "../../domain/repository/place.repository";
 import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 import { CreatePlace, DeletePlace, GetAll, GetPlace, UpdatePlace } from "../../domain/use-cases/place";
 import { CreatePlaceDto, UpdatePlaceDto } from "../../domain/dtos/place";
+import { CreateCategory } from "../../domain/use-cases/place/create-category-place";
 
 export class PlaceController {
 
@@ -55,7 +56,7 @@ export class PlaceController {
 
     new DeletePlace(this.placeRepository)
     .execute(id)
-    .then(msg => res.status(200).json(msg))
+    .then(msg => res.status(200).json({message: msg}))
     .catch(error => this.handleError(error, res));
   }
 
@@ -82,6 +83,17 @@ export class PlaceController {
     new CreatePlace(this.placeRepository)
     .execute(createDto!)
     .then(place => res.status(201).json(place))
+    .catch(error => this.handleError(error, res));
+  }
+
+  public createCategory = (req: Request, res: Response) => {
+    const name = req.body.name;
+
+    if (name === undefined) return res.status(400).json({error:'No name was provided'});
+
+    new CreateCategory(this.placeRepository)
+    .execute(name)
+    .then(msg => res.status(201).json({message: msg}))
     .catch(error => this.handleError(error, res));
   }
 
