@@ -5,6 +5,7 @@ import { AuthRepository } from "../../domain/repository/auth.repository";
 import { CreateUserDto } from "../../domain/dtos/user";
 import { Login, Register, RevalidateToken, ValidateUser } from "../../domain/use-cases/auth";
 import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto';
+import { ValidateSms } from "../../domain/use-cases/auth/confirmSms-user";
 
 export class AuthController {
   
@@ -50,14 +51,33 @@ export class AuthController {
   };
 
   validateUser = (req: Request, res: Response) => {
-    const token = req.params;
+    const type = req.params.type;
+    const phone = req.query.phone as string
 
-    if (token) throw CustomError.badRequest('Confirmation code was not provided');
+    console.log(type);
+    console.log(phone);
+
+    if (!type) throw CustomError.badRequest('Confirmation code was not provided');
+    if (!phone) throw CustomError.badRequest('Phone number was not provided');
 
     new ValidateUser(this.authRepository)
-    .execute(token!)
+    .execute(type, phone)
+    .then(msg => res.status(201).json({status: msg, message: `Code sent to ${phone}` }))
+    .catch(error => this.handleError(error, res));
+  };
+
+  confirmCode = (req: Request, res: Response) => {
+    const phone = req.body.phone;
+    const code = req.body.code;
+
+    if (!phone) throw CustomError.badRequest('Phone number was not provided');
+    if (!code) throw CustomError.badRequest('Confirmation code was not provided');
+
+    new ValidateSms(this.authRepository)
+    .execute(code, `+${phone}`)
     .then(msg => res.status(201).json(msg))
     .catch(error => this.handleError(error, res));
+
   };
 
   revalidateToken = (req: Request, res: Response) => {

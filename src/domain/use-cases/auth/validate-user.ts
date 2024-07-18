@@ -1,7 +1,7 @@
 import { AuthRepository } from "../../repository/auth.repository";
 
 interface ValidateUserUseCase {
-  execute(token: string): Promise<string>;
+  execute(type: string, phone:string): Promise<string>;
 }
 
 
@@ -9,8 +9,8 @@ export class ValidateUser implements ValidateUserUseCase {
 
   constructor(private readonly repository: AuthRepository){}
   
-  execute(token: string): Promise<string> {
-    return this.repository.validateUser(token);
+  execute(type: string, phone:string): Promise<string> {
+    return this.repository.verifyUser(type, phone);
   }
 
 }

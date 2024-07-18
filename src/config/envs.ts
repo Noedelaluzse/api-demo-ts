@@ -7,6 +7,9 @@ export const envs = {
   PUBLIC_PATH: get('PUBLIC_PATH').default('public').asString(),
   JWT_SEED: get('JWT_SEED').required().asString(),
   MONGO_URL: get('MONGO_URL').required().asString(),
-  MONGO_DB_NAME: get('MONGO_DB_NAME').required().asString()
+  MONGO_DB_NAME: get('MONGO_DB_NAME').required().asString(),
+  ACCOUNTSID: get('ACCOUNTSID').required().asString(),
+  AUTHTOKEN: get('AUTHTOKEN').required().asString(),
+  VERIFYSID: get('VERIFYSID').required().asString()
 
 }

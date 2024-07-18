@@ -21,11 +21,13 @@ export class AuthRoutes {
 
     router.get('/verify-profile/:type', authController.validateUser) //! TODO: Controllador para solicitar el SMS o EMAIL (sms, email)
 
-    router.post('/validate-sms/:opt', authController.validateUser); //! TODO: Controllador para realizar la confirmación del SMS
+    router.post('/validate-sms', authController.confirmCode); //! TODO: Controllador para realizar la confirmación del SMS
     router.get('/validate-email/:token', authController.validateUser);
     
     router.get('/renew', [AuthMiddleware.validateJwt], authController.revalidateToken);
 
     return router;
+
   }
+
 }
