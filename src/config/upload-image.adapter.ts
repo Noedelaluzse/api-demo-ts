@@ -1,9 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 
 import { envs } from './envs';
-import { CustomError } from '../domain/dtos/errors/custom.error';
-
-// const myCloudinary = cloudinary.v2.config(envs.CLOUDINARY_URL);
 cloudinary.config(envs.CLOUDINARY_URL);
 
 export class UploadImageServiceAdapter { 

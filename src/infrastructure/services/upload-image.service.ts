@@ -26,7 +26,7 @@ export class UploadImageServiceImpl implements FileUploadDataService {
     
     const fileExtension = file.mimetype.split("/")[1];
 
-    if (!validTypes.includes(fileExtension!)) throw CustomError.badRequest(`Invalid type: ${fileExtension}, valid ones ${validTypes}`);
+    if (!validTypes.includes(fileExtension)) throw CustomError.badRequest(`Invalid type: ${fileExtension}, valid ones ${validTypes}`);
 
     const destination = path.join(__dirname, "../../uploads");
 
