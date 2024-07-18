@@ -10,6 +10,6 @@ export const envs = {
   MONGO_DB_NAME: get('MONGO_DB_NAME').required().asString(),
   ACCOUNTSID: get('ACCOUNTSID').required().asString(),
   AUTHTOKEN: get('AUTHTOKEN').required().asString(),
-  VERIFYSID: get('VERIFYSID').required().asString()
-
+  VERIFYSID: get('VERIFYSID').required().asString(),
+  CLOUDINARY_URL: get('CLOUDINARY_URL').required().asString()
 }

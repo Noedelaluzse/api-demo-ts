@@ -2,6 +2,7 @@ import express, {Router} from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import { MongoDatabase } from '../data/mongo';
+import fileUpload from 'express-fileupload';
 
 interface Options {
   port: number;
@@ -43,7 +44,9 @@ export class Server {
     this.app.use(express.json()); // For parsing application/json
     this.app.use(express.urlencoded({extended: true})); // For parsing application/x-www-form-urlencoded
     this.app.use(compression());
-
+    this.app.use(fileUpload({
+      limits: { fileSize: 50 * 1024 * 1024 },
+  }));
     // Public Folder
     this.app.use(express.static(this.publicPath));
 

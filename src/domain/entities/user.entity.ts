@@ -9,7 +9,7 @@ export class UserEntity {
     private readonly phone: string,
     private readonly gender: string,
     private readonly rol: string,
-    private readonly img: string | null,
+    public img: string | null,
     private readonly token?: string
   ) {};
 

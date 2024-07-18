@@ -1,11 +1,29 @@
 import { UserDatasource } from "../../domain/datasources/user.datasource";
-import { CreateUserDto, UpdateUserDto } from "../../domain/dtos/user";
+import { UpdateUserDto } from "../../domain/dtos/user";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { CustomError } from '../../domain/dtos/errors/custom.error';
 import { UserModel } from "../../data/mongo";
 
 
 export class UserDatasourceImpl implements UserDatasource {
+  
+  async uploadImageProfile(phone: string, image:string): Promise<string> {
+
+    const userOnDb = await UserModel.findOneAndUpdate(
+      { phone },
+      { image_url: image },
+      { new: true }
+    );
+
+    if (!userOnDb) throw CustomError.badRequest('User not found');
+
+    const userEntity = UserEntity.fromModelToEntity(userOnDb);  
+    return userEntity.img!;
+  }
+  
+  updateImageProfile(phone: string, image:string): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
 
   async update(updateUserDto: UpdateUserDto, id: string): Promise<UserEntity> {
 
@@ -30,7 +48,7 @@ export class UserDatasourceImpl implements UserDatasource {
    
   }
 
-  async findById(id: String): Promise<UserEntity> {
+  async findById(id: string): Promise<UserEntity> {
     
     try {
       const userOnDb = await UserModel.findById({_id: id});

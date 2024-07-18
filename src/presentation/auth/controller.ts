@@ -54,9 +54,6 @@ export class AuthController {
     const type = req.params.type;
     const phone = req.query.phone as string
 
-    console.log(type);
-    console.log(phone);
-
     if (!type) throw CustomError.badRequest('Confirmation code was not provided');
     if (!phone) throw CustomError.badRequest('Phone number was not provided');
 
