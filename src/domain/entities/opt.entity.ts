@@ -3,6 +3,7 @@ export class OtpData {
   constructor(
     public readonly phone: string,
     public readonly token:string,
+    public readonly status: string
   ) {
 
   }
@@ -11,12 +12,13 @@ export class OtpData {
     const {
       phone,
       token,
-
+      status
     } = object;
 
     return new OtpData(
       phone,
-      token
+      token,
+      status
     );
 
   }

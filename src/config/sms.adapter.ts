@@ -13,7 +13,7 @@ export class SmsService {
       const verification = await client.verify.v2
       .services(envs.VERIFYSID)
       .verifications.create({to: phone, channel:"sms"});
-
+  
       return verification.status;
 
     } catch(error) {

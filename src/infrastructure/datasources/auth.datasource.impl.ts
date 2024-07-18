@@ -48,7 +48,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
     try {
       const status = await SmsService.verifySMS(`+${phone}`, code);
-      if (status !== "approved") throw CustomError.badRequest('Invalid code');
+      if (status !== "approved") throw CustomError.badRequest('Invalid code provided');
 
       const noSignPhone = phone.replace("+", "");
       const userUpdate = await UserModel.findOneAndUpdate({phone: noSignPhone}, {wasValidated: true});
@@ -57,7 +57,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
       const token = await JwtAdapter.generateToken({phone});
       
-      return OtpData.generateOtp({token, phone});
+      return OtpData.generateOtp({token, phone, status});
       
     } catch(error) {
       console.log(error);
