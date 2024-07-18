@@ -13,6 +13,7 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   findById(id: String): Promise<UserEntity> {
+
     return this.datasource.findById(id);
   }
 

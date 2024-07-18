@@ -14,16 +14,17 @@ export class AuthMiddleware {
     if (!authorization.startsWith('Bearer')) return res.status(401).json({ message: 'Invalid token' });
 
     const token = authorization.split(' ')[1] || '';
-
     try {
 
       const payload = await JwtAdapter.validateToken<{phone: string}>(token);
-
+      
       if (!payload) return res.status(401).json({ message: 'Invalid token' });
       
-      const user = await UserModel.findOne({ where: {phone: payload.phone}});
+      const user = await UserModel.findOne({
+        phone: payload.phone
+      })
 
-      if (!user) return res.status(401).json({ message: 'Invalid token' });
+      if (!user) return res.status(401).json({ message: 'User not found' });
 
       req.body.user = UserEntity.fromModelToEntity(user);
 

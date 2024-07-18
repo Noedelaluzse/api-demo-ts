@@ -15,7 +15,7 @@ export class UserRoutes {
     const userRepository = new UserRepositoryImpl(datasource);
     const userController = new UserController(userRepository);
 
-    router.put('/',   [AuthMiddleware.validateJwt], userController.updateUser);
+    router.put('/:id',   [AuthMiddleware.validateJwt], userController.updateUser);
     router.get('/:id',[AuthMiddleware.validateJwt], userController.getUser);
     
     return router;

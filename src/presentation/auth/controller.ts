@@ -12,7 +12,7 @@ export class AuthController {
 
   public handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
-      return res.status(error.statusCode).json({error: error.message});
+      return res.status(error.statusCode).json({message: error.message});
     }
 
     console.log(`${error}`); // Eliminar el console
