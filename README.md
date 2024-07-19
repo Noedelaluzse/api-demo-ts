@@ -16,21 +16,21 @@
 
 ## Estructura del directorio:
 
-* Src:
-- Config:
-- Contiene los adaptadores de las librerías de servicios como Cloudinary y Twilio.
-* Data:
-- Contiene los modelos de MongoDB.
-* Domain:
-- Lógica de negocio.
-* Infrastructure:
-- Implementación de la lógica de negocio.
-* Presentation:
-- Rutas y controladores de la API.
-* Uploads:
-- Ruta para la visualización de archivos guardados de manera local.
-* App:
-- Inicio de la aplicación.
+Src:
+- Config:  
+Contiene los adaptadores de las librerías de servicios como Cloudinary y Twilio.
+* Data:  
+Contiene los modelos de MongoDB.
+* Domain:  
+Lógica de negocio.  
+* Infrastructure:  
+Implementación de la lógica de negocio.  
+* Presentation:  
+Rutas y controladores de la API.  
+* Uploads:  
+Ruta para la visualización de archivos guardados de manera local.  
+* App:  
+Inicio de la aplicación.  
 
 ## Descripción del proyecto:
 Esta REST API es una demostración de mis habilidades avanzadas como Backend Developer y mi dominio de diversas tecnologías clave. La API incluye:
