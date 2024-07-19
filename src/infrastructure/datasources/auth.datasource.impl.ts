@@ -50,8 +50,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
       const status = await SmsService.verifySMS(`+${phone}`, code);
       if (status !== "approved") throw CustomError.badRequest('Invalid code provided');
 
-      const noSignPhone = phone.replace("+", "");
-      const userUpdate = await UserModel.findOneAndUpdate({phone: noSignPhone}, {wasValidated: true});
+      const userUpdate = await UserModel.findOneAndUpdate({phone: phone}, {wasValidated: true});
 
       if (!userUpdate) throw CustomError.badRequest('There was an error validating the user');
 

@@ -26,7 +26,7 @@ const placeSchema = new mongoose.Schema(
       required: [true, "Long description is required"],
     },
     image_url: {
-      type: String,
+      type: [String],
     },
     categories: [{
       type: mongoose.Schema.Types.ObjectId,

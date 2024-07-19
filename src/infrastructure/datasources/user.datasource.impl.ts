@@ -37,15 +37,9 @@ export class UserDatasourceImpl implements UserDatasource {
 
     userOnDb.save();
 
-    const userEntity = UserEntity.fromModelToEntity(userOnDb);  
-
-    return userEntity.img!;
+    return secure_url;
   }
   
-  updateImageProfile(phone: string, image:string): Promise<string> {
-    throw new Error("Method not implemented.");
-  }
-
   async update(updateUserDto: UpdateUserDto, id: string): Promise<UserEntity> {
 
    try {

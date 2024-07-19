@@ -71,7 +71,7 @@ export class AuthController {
     if (!code) throw CustomError.badRequest('Confirmation code was not provided');
 
     new ValidateSms(this.authRepository)
-    .execute(code, `+${phone}`)
+    .execute(code, `${phone}`)
     .then(msg => res.status(201).json(msg))
     .catch(error => this.handleError(error, res));
 

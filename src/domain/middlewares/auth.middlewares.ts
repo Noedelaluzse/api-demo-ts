@@ -17,7 +17,7 @@ export class AuthMiddleware {
     try {
 
       const payload = await JwtAdapter.validateToken<{phone: string}>(token);
-      
+
       if (!payload) return res.status(401).json({ message: 'Invalid token' });
       
       const user = await UserModel.findOne({

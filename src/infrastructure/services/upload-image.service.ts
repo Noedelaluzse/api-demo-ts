@@ -41,8 +41,17 @@ export class UploadImageServiceImpl implements FileImageService {
     return cloudName;
     
   }
-  uploadMultipleFiles(files: UploadedFile[], validTypes: string[]): Promise<string> {
-    throw new Error('Method not implemented.');
+  async uploadMultipleFiles(files: UploadedFile[], validTypes: string[]): Promise<string[]> {
+    
+    const urlImages = [];
+
+    for (const file of files) {
+      const cloudName = await this.uploadSingleFile(file, validTypes);
+      urlImages.push(cloudName.secure_url);
+    }
+
+    return urlImages
+    
   }
 
 }

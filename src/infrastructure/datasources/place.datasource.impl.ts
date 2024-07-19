@@ -1,13 +1,16 @@
+import { UploadedFile } from "express-fileupload";
 import { CategoryModel, PlaceModel } from "../../data/mongo";
 import { PlaceDatasource } from "../../domain/datasources/place.datasource";
 import { CustomError } from "../../domain/dtos/errors/custom.error";
 import { CreatePlaceDto, UpdatePlaceDto } from "../../domain/dtos/place";
 import { PaginationDto } from "../../domain/dtos/shared";
 import { PlaceEntity } from "../../domain/entities/place.entity";
+import { FileImageService } from "../../domain/services/file-upload.service";
 
 
 
 export class PlaceDatasourceImpl implements PlaceDatasource {
+
   async createCategory(name: string): Promise<string> {
 
     const value = name.toLowerCase();
@@ -105,5 +108,37 @@ export class PlaceDatasourceImpl implements PlaceDatasource {
 
     return 'The place was successfully removed '
   }
+  
+  async uploadImagePlace(id: string, images: UploadedFile[], service: FileImageService): Promise<string[]> {
 
+    const placeOnDb = await PlaceModel.findById({_id:id});
+
+    if (!placeOnDb) throw CustomError.badRequest('User not found');
+
+    if (placeOnDb.image_url.length > 0) {
+
+      for (const url of placeOnDb.image_url) {
+        const arrName = url.split('/');
+        const image_name = arrName.pop();
+        const public_id = image_name?.split('.').shift();
+
+        const res = await service.deleteSingleFile(public_id!);
+        if (!res) throw CustomError.badRequest('there was an error deleting the photo')
+      }
+    }
+
+    const cloudImage = await service.uploadMultipleFiles(images, ['png', 'jpg', 'jpeg']);
+
+    if (!cloudImage) throw CustomError.badRequest('there was an error uploading the photo');
+
+    const arrURL = cloudImage;
+
+    placeOnDb.image_url = arrURL;
+
+    placeOnDb.save();
+
+    const placeEntity = PlaceEntity.fromModelToEntity(placeOnDb);  
+
+    return arrURL;
+  }
 }

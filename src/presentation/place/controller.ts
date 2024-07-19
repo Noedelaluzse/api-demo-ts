@@ -5,10 +5,16 @@ import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 import { CreatePlace, DeletePlace, GetAll, GetPlace, UpdatePlace } from "../../domain/use-cases/place";
 import { CreatePlaceDto, UpdatePlaceDto } from "../../domain/dtos/place";
 import { CreateCategory } from "../../domain/use-cases/place/create-category-place";
+import { UploadedFile } from "express-fileupload";
+import { UploadImagePlace } from "../../domain/use-cases/place/upload-image-place";
+import { FileImageService } from "../../domain/services/file-upload.service";
 
 export class PlaceController {
 
-  constructor(private readonly placeRepository: PlaceRepository) {}
+  constructor(
+    private readonly placeRepository: PlaceRepository,
+    private readonly imageService: FileImageService
+  ) {}
 
   public handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
@@ -94,6 +100,16 @@ export class PlaceController {
     new CreateCategory(this.placeRepository)
     .execute(name)
     .then(msg => res.status(201).json({message: msg}))
+    .catch(error => this.handleError(error, res));
+  }
+
+  public uploadImagesPlace = (req: Request, res: Response) => {
+    const id = req.body.id;
+    const files = req.body.files as UploadedFile[];
+
+    new UploadImagePlace(this.placeRepository, this.imageService)
+    .execute(id, files)
+    .then(imageUrl => res.status(200).json({imageUrl}))
     .catch(error => this.handleError(error, res));
   }
 

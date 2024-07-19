@@ -13,10 +13,6 @@ export class UserRepositoryImpl implements UserRepository {
   uploadImageProfile(phone: string, image: UploadedFile,service: FileImageService): Promise<string> {
     return this.datasource.uploadImageProfile(phone, image, service);
   }
-
-  updateImageProfile(phone: string, image:string): Promise<string> {
-    return this.datasource.updateImageProfile(phone, image);
-  }
   
   update(updateUserDto: UpdateUserDto, id:string): Promise<UserEntity> {
     return this.datasource.update(updateUserDto, id);

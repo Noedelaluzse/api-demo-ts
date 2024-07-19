@@ -23,7 +23,7 @@ export class PlaceEntity {
     private readonly location: LocationEntity,
     private readonly long_description: string,
     private readonly user: UserJoin,
-    private readonly image_url: string | null,
+    readonly image_url: string[],
     private readonly categories: CategoryEntity[]
   ) {}
 
@@ -35,16 +35,22 @@ export class PlaceEntity {
       location,
       long_description,
       id_user,
-      image_url = null,
+      image_url = [],
       categories
     } = object;
 
+    if (!id_user) throw new Error('User not found');
+
+    if (!categories) throw new Error('Categories not found');
+    
     const user: UserJoin = {
       name: id_user.name,
       lastname: id_user.lastname,
     };
 
+    
     const arrCategories: CategoryEntity[] = categories.map((category: { [key: string]: any }) => {
+
       return {
         id: category._id,
         name: category.name

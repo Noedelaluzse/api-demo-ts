@@ -8,7 +8,7 @@ export class CreatePlaceDto {
     public readonly long_description: string,
     public readonly id_user: string,
     public readonly createdAt: Date,
-    public readonly image_url: string = '',
+    public readonly image_url: string[] = [],
     public readonly categories: string[] = []
   ) {}
 
@@ -38,7 +38,7 @@ export class CreatePlaceDto {
       long_description,
       id_user,
       createdAt,
-      '',
+      [],
       categories
     )];
   }
