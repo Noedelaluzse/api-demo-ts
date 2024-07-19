@@ -11,9 +11,7 @@ export class UploadImageProfile implements UploadImageProfileUseCase {
   constructor(private readonly repository: UserRepository, private readonly  service:FileUploadDataService) {}
 
   async execute(phone: string, image: UploadedFile): Promise<string> {
-    const imageUri = await this.service.uploadSingleFile(image, ['png', 'jpg', 'jpeg']);
-
-    return this.repository.uploadImageProfile(phone, imageUri);
+    return this.repository.uploadImageProfile(phone, image, this.service);
   }
 
 }

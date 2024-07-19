@@ -3,21 +3,42 @@ import { UpdateUserDto } from "../../domain/dtos/user";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { CustomError } from '../../domain/dtos/errors/custom.error';
 import { UserModel } from "../../data/mongo";
+import { FileUploadDataService } from "../../domain/services/file-upload.service";
+import { UploadedFile } from "express-fileupload";
 
 
 export class UserDatasourceImpl implements UserDatasource {
   
-  async uploadImageProfile(phone: string, image:string): Promise<string> {
+  async uploadImageProfile(phone: string, image: UploadedFile, service: FileUploadDataService): Promise<string> {
 
-    const userOnDb = await UserModel.findOneAndUpdate(
-      { phone },
-      { image_url: image },
-      { new: true }
-    );
+    const userOnDb = await UserModel.findOne({ phone });
 
     if (!userOnDb) throw CustomError.badRequest('User not found');
 
+    if (userOnDb.image_url) {
+      
+      const arrName = userOnDb.image_url.split('/');
+
+      const image_name = arrName.pop();
+      
+      const public_id = image_name?.split('.').shift();
+
+      const res = await service.deleteSingleFile(public_id!);
+      if (!res) throw CustomError.badRequest('there was an error deleting the photo')
+    }
+
+    const cloudImage = await service.uploadSingleFile(image, ['png', 'jpg', 'jpeg']);
+
+    if (!cloudImage) throw CustomError.badRequest('there was an error uploading the photo');
+
+    const { secure_url } = cloudImage;
+
+    userOnDb.image_url = secure_url;
+
+    userOnDb.save();
+
     const userEntity = UserEntity.fromModelToEntity(userOnDb);  
+
     return userEntity.img!;
   }
   
