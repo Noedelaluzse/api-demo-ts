@@ -1,17 +1,15 @@
-import path from 'path';
 import fs from 'fs'
 import { UploadedFile } from 'express-fileupload';
-import { Uuid } from '../../config';
 import { CustomError } from '../../domain/dtos/errors/custom.error';
-import { UploadImageServiceAdapter } from '../../config/upload-image.adapter';
-import { FileUploadDataService } from '../../domain/services/file-upload.service';
+import { ImageServiceAdapter } from '../../config/image.adapter';
+import { FileImageService } from '../../domain/services/file-upload.service';
 import { UploadApiResponse } from 'cloudinary';
 
 
-export class UploadImageServiceImpl implements FileUploadDataService {
+export class UploadImageServiceImpl implements FileImageService {
 
   async deleteSingleFile(public_id: string): Promise<boolean> {
-   const res = await UploadImageServiceAdapter.deleteImage(public_id);
+   const res = await ImageServiceAdapter.deleteImage(public_id);
    return res;
   }
 
@@ -36,7 +34,7 @@ export class UploadImageServiceImpl implements FileUploadDataService {
 
     const { tempFilePath } = file;
 
-    const cloudName = await UploadImageServiceAdapter.uploadImage(tempFilePath);
+    const cloudName = await ImageServiceAdapter.uploadImage(tempFilePath);
 
     if (!cloudName) throw CustomError.badRequest("There was an error uploading the image to the cloud");
 

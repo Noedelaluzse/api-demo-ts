@@ -3,13 +3,13 @@ import { UpdateUserDto } from "../../domain/dtos/user";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { CustomError } from '../../domain/dtos/errors/custom.error';
 import { UserModel } from "../../data/mongo";
-import { FileUploadDataService } from "../../domain/services/file-upload.service";
+import { FileImageService } from "../../domain/services/file-upload.service";
 import { UploadedFile } from "express-fileupload";
 
 
 export class UserDatasourceImpl implements UserDatasource {
   
-  async uploadImageProfile(phone: string, image: UploadedFile, service: FileUploadDataService): Promise<string> {
+  async uploadImageProfile(phone: string, image: UploadedFile, service: FileImageService): Promise<string> {
 
     const userOnDb = await UserModel.findOne({ phone });
 

@@ -1,7 +1,7 @@
 import { UploadApiResponse } from "cloudinary";
 import { UploadedFile } from "express-fileupload";
 
-export abstract class FileUploadDataService {
+export abstract class FileImageService {
 
   abstract uploadSingleFile(file: UploadedFile, validTypes: string[]): Promise<UploadApiResponse>
   abstract uploadMultipleFiles(files: UploadedFile[], validTypes: string[]): Promise<string>

@@ -4,12 +4,12 @@ import { CustomError } from "../../domain/dtos/errors/custom.error";
 import { GetUser, UpdateUser } from "../../domain/use-cases/user";
 import { UpdateUserDto } from "../../domain/dtos/user";
 import { UploadImageProfile } from "../../domain/use-cases/user/upload-image-profile";
-import { FileUploadDataService } from "../../domain/services/file-upload.service";
+import { FileImageService } from "../../domain/services/file-upload.service";
 import { UploadedFile } from "express-fileupload";
 
 export class UserController {
 
-  constructor(private readonly userRepository: UserRepository, private readonly uploadImageService: FileUploadDataService){}
+  constructor(private readonly userRepository: UserRepository, private readonly uploadImageService: FileImageService){}
 
   public handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {

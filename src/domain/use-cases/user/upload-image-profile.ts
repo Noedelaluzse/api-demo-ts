@@ -1,5 +1,5 @@
 import { UserRepository } from "../../repository/user.repository";
-import { FileUploadDataService } from "../../services/file-upload.service";
+import { FileImageService } from "../../services/file-upload.service";
 import { UploadedFile } from "express-fileupload";
 
 interface UploadImageProfileUseCase {
@@ -8,7 +8,7 @@ interface UploadImageProfileUseCase {
 
 export class UploadImageProfile implements UploadImageProfileUseCase {
 
-  constructor(private readonly repository: UserRepository, private readonly  service:FileUploadDataService) {}
+  constructor(private readonly repository: UserRepository, private readonly  service:FileImageService) {}
 
   async execute(phone: string, image: UploadedFile): Promise<string> {
     return this.repository.uploadImageProfile(phone, image, this.service);

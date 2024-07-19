@@ -3,7 +3,7 @@ import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { envs } from './envs';
 cloudinary.config(envs.CLOUDINARY_URL);
 
-export class UploadImageServiceAdapter { 
+export class ImageServiceAdapter { 
 
   static async uploadImage(path: string): Promise<UploadApiResponse|null> {
     try {
