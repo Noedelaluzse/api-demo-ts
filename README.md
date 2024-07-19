@@ -1,4 +1,4 @@
-# REST API de Validación de OTP
+# REST API con Clean Architecture y TypeScript
 
 ## Tecnologías:
 - **Node.js**
@@ -16,41 +16,21 @@
 
 ## Estructura del directorio:
 
-Src/
-├── Config/
-│ └── Adapters/
-│ └── cloudinary.ts # Adaptador para el servicio Cloudinary.
-│ └── twilio.ts # Adaptador para el servicio Twilio.
-├── Data/
-│ └── Models/
-│ └── userModel.ts # Modelo de usuario para MongoDB.
-│ └── placeModel.ts #
-│ └── categoryModel.ts # Modelo de categoria para MongoDB.
-│ └── logModel.ts # Modelo de log para MongoDB.
-├── Domain/
-│ └── Datasources/
-│ └── authDatasources.ts # Lógica de negocio para la autenticación.
-│ └── userDatasources.ts # Lógica de negocio para la validación de usuarios.
-│ └── otpDatasources.ts # Lógica de negocio para la validación de OTP.
-├── Infrastructure/
-│ └── Repositories/
-│ └── userRepository.ts # Implementación de la lógica de acceso a datos de usuario.
-│ └── otpRepository.ts # Implementación de la lógica de acceso a datos de OTP.
-├── Presentation/
-│ └── Controllers/
-│ └── authController.ts # Controlador para la autenticación.
-│ └── otpController.ts # Controlador para la validación de OTP.
-│ └── Routes/
-│ └── authRoutes.ts # Rutas de la API para la autenticación.
-│ └── otpRoutes.ts # Rutas de la API para la validación de OTP.
-├── Uploads/
-│ └── Local/ # Ruta para la visualización de archivos guardados de manera local.
-├── App/
-│ └── app.ts # Inicio de la aplicación.
-│ └── server.ts # Configuración del servidor.
-
-
-
+* Src:
+- Config:
+- Contiene los adaptadores de las librerías de servicios como Cloudinary y Twilio.
+* Data:
+- Contiene los modelos de MongoDB.
+* Domain:
+- Lógica de negocio.
+* Infrastructure:
+- Implementación de la lógica de negocio.
+* Presentation:
+- Rutas y controladores de la API.
+* Uploads:
+- Ruta para la visualización de archivos guardados de manera local.
+* App:
+- Inicio de la aplicación.
 
 ## Descripción del proyecto:
 Esta REST API es una demostración de mis habilidades avanzadas como Backend Developer y mi dominio de diversas tecnologías clave. La API incluye:
