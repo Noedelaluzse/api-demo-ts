@@ -19,17 +19,17 @@
 Src:
 - Config:  
 Contiene los adaptadores de las librerías de servicios como Cloudinary y Twilio.
-* Data:  
+- Data:  
 Contiene los modelos de MongoDB.
-* Domain:  
+- Domain:  
 Lógica de negocio.  
-* Infrastructure:  
+- Infrastructure:  
 Implementación de la lógica de negocio.  
-* Presentation:  
+- Presentation:  
 Rutas y controladores de la API.  
-* Uploads:  
+- Uploads:  
 Ruta para la visualización de archivos guardados de manera local.  
-* App:  
+- App:  
 Inicio de la aplicación.  
 
 ## Descripción del proyecto:
