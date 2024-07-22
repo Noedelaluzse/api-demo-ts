@@ -43,7 +43,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
     const html = Utils.replaceParams(htmlTemplate, obj);
 
     try {
-      const res = await emailadapter.sendEmail({
+      await emailadapter.sendEmail({
         to: userEntity.email,
         subject: "Restore Password",
         text: "Un correo de prueba",
