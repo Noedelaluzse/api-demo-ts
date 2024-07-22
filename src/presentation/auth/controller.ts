@@ -6,6 +6,8 @@ import { CreateUserDto } from "../../domain/dtos/user";
 import { Login, Register, RevalidateToken, ValidateUser } from "../../domain/use-cases/auth";
 import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto';
 import { ValidateSms } from "../../domain/use-cases/auth/confirmSms-user";
+import { RestorePassword } from "../../domain/use-cases/auth/restore-password";
+import { ChangePassword } from "../../domain/use-cases/auth/change-password";
 
 export class AuthController {
   
@@ -87,4 +89,30 @@ export class AuthController {
     .then(user => res.status(201).json(user))
     .catch(error => this.handleError(error, res));
   };
+
+  restorePassword = (req: Request, res: Response)  => {
+    
+    const email = req.body.email;
+    
+    if (!email) throw CustomError.badRequest('Email is required');
+
+    new RestorePassword(this.authRepository)
+    .execute(email)
+    .then(msg => res.status(200).json({message: msg}))
+    .catch(error => this.handleError(error, res));
+  }
+
+  changePassword(req: Request, res: Response) {
+    const token = req.params.token;
+    const newpassword = req.body.newPassword;
+
+    if (!token) throw CustomError.badRequest('Token is required');
+
+    if (!newpassword)  throw CustomError.badRequest('Password is required');
+
+    new ChangePassword(this.authRepository)
+    .execute(newpassword, token)
+    .then(msg => res.status(200).json({message: msg}))
+    .catch(error => this.handleError(error, res));
+  }
 }

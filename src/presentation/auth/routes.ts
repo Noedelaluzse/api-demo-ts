@@ -26,6 +26,9 @@ export class AuthRoutes {
     
     router.get('/renew', [AuthMiddleware.validateJwt], authController.revalidateToken);
 
+    router.post('/restore-password', authController.restorePassword);
+    router.post('/change-password/:token', authController.changePassword);
+
     return router;
 
   }

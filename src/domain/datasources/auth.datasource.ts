@@ -10,4 +10,6 @@ export abstract class AuthDatasource {
   abstract validateSMS(code: string, phone:string): Promise<OtpData>
   abstract validateEmail(code: string, email:string): Promise<OtpData>
   abstract revalidateToken(token: string): Promise<UserEntity>;
+  abstract restorePassword(email: string): Promise<string>
+  abstract changePassword(newPassword: string, token: string): Promise<string>
 }

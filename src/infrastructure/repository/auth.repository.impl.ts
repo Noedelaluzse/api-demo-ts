@@ -9,6 +9,14 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   constructor(private readonly datasource: AuthDatasource){}
 
+  restorePassword(email: string): Promise<string> {
+    return this.datasource.restorePassword(email);
+  }
+  
+  changePassword(newPassword: string, token: string): Promise<string> {
+    return this.datasource.changePassword(newPassword, token);
+  }
+
   verifyUser(type: string, id:string): Promise<string> {
     return this.datasource.verifyUser(type, id);
   }

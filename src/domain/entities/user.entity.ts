@@ -3,14 +3,15 @@ export class UserEntity {
 
 
   constructor(
-    private readonly name: string,
-    private readonly lastname: string,
-    private readonly fullName: string,
-    private readonly phone: string,
-    private readonly gender: string,
-    private readonly rol: string,
+    public readonly name: string,
+    public readonly lastname: string,
+    public readonly fullName: string,
+    public readonly phone: string,
+    public readonly gender: string,
+    public readonly rol: string,
+    public readonly email: string,
     public img: string | null,
-    private readonly token?: string
+    public readonly token?: string
   ) {};
 
   static fromModelToEntity(object : {[key:string]: any}, token?: string) {
@@ -22,6 +23,7 @@ export class UserEntity {
       gender,
       rol,
       image_url = null,
+      email
     } = object;
 
     const fullName = `${name} ${lastname}`;
@@ -33,6 +35,7 @@ export class UserEntity {
       phone,
       gender,
       rol,
+      email,
       image_url,
       token
     );

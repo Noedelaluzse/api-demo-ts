@@ -1,4 +1,5 @@
 import { bcryptAdapter } from "../../config/bcrypt.adapter";
+import { EmailAdapter } from "../../config/email.adapter";
 import { JwtAdapter } from "../../config/jwt.adapter";
 import { SmsService } from "../../config/sms.adapter";
 import { UserModel } from "../../data/mongo";
@@ -8,10 +9,60 @@ import { CustomError } from "../../domain/dtos/errors/custom.error";
 import { CreateUserDto } from "../../domain/dtos/user";
 import { OtpData } from "../../domain/entities/opt.entity";
 import { UserEntity } from "../../domain/entities/user.entity";
+import { Utils } from "../utils/Utils";
 
 
 
 export class AuthDatasourceImpl implements AuthDatasource {
+  
+  async restorePassword(email: string): Promise<string> {
+    
+    const userOnDb = await UserModel.findOne({
+      email: email
+    });
+
+    if (!userOnDb) throw CustomError.badRequest('No user founded');
+
+    const userEntity = UserEntity.fromModelToEntity(userOnDb);
+
+    const emailadapter = new EmailAdapter();
+
+    const htmlTemplate = Utils.getTemplate('restore-password.html');
+
+    const year = new Date().getFullYear();
+
+    const token = await JwtAdapter.generateToken({phone: userEntity.phone});
+
+    const obj = {
+      fullname: userEntity.fullName,
+      year: year.toString(),
+      url: `http://localhost:3000/auth/change-password/${token}`,
+      companyname: "Noe de la luz"
+    };
+
+    const html = Utils.replaceParams(htmlTemplate, obj);
+
+    try {
+      const res = await emailadapter.sendEmail({
+        to: userEntity.email,
+        subject: "Restore Password",
+        text: "Un correo de prueba",
+        html: html
+      });
+  
+      return 'If your email is correct, a message will be sent';
+  
+    } catch(error) {
+      console.log(error);
+      const customError = error as CustomError;
+      throw CustomError.internalServer(customError.message);
+    }
+
+  } 
+
+  changePassword(newPassword: string, token: string): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
 
   async verifyUser(type: string, phone:string): Promise<string> {
 
