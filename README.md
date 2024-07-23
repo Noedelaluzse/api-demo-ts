@@ -83,7 +83,7 @@ Para ejecutar este proyecto localmente, sigue estos pasos:
    ```
 5. Inicia el servidor:
    ```bash
-   npm start
+   npm run dev
    ```
 6. La API estará disponible en `http://localhost:3000`.
 
