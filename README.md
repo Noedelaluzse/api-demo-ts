@@ -63,10 +63,27 @@ Para ejecutar este proyecto localmente, sigue estos pasos:
    ```
 4. Configura las variables de entorno en el archivo `.env`:
    ```bash
+   PORT=3000
+   PUBLIC_PATH=PUBLIC_PATH
+   NODE_ENV=development
+   JWT_SEED=
+   MONGO_URL=
+   MONGO_DB_NAME=
+   ACCOUNTSID=
+   AUTHTOKEN=
+   VERIFYSID=
+   CLOUDINARY_URL=
+   OUTGOING_EMAIL=
+   EMAIL_PASSWORD=
+   SMTP_SERVER=
+   OUTGOING_PORT=
+   MAILER_SERVICE=
+   MAILER_SECRET_KEY=
+   MAILER_EMAIL=
    ```
 5. Inicia el servidor:
    ```bash
    npm start
    ```
-6. La API estará disponible en `http://localhost:PORT`.
+6. La API estará disponible en `http://localhost:3000`.
 
