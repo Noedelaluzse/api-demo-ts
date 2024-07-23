@@ -51,3 +51,22 @@ Para ejecutar este proyecto localmente, sigue estos pasos:
 1. Clona este repositorio:
    ```bash
    git clone https://github.com/tu-usuario/tu-repositorio.git
+
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Copia el archivo `.env.template` y renómbralo a `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+4. Configura las variables de entorno en el archivo `.env`:
+   ```bash
+   ```
+5. Inicia el servidor:
+   ```bash
+   npm start
+   ```
+6. La API estará disponible en `http://localhost:PORT`.
+
