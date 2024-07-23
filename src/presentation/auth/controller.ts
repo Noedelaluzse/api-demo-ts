@@ -102,7 +102,7 @@ export class AuthController {
     .catch(error => this.handleError(error, res));
   }
 
-  changePassword(req: Request, res: Response) {
+  changePassword = (req: Request, res: Response) => {
     const token = req.params.token;
     const newpassword = req.body.newPassword;
 

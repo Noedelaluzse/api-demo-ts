@@ -1,6 +1,6 @@
+import { JwtAdapter } from "../../config";
 import { bcryptAdapter } from "../../config/bcrypt.adapter";
 import { EmailAdapter } from "../../config/email.adapter";
-import { JwtAdapter } from "../../config/jwt.adapter";
 import { SmsService } from "../../config/sms.adapter";
 import { UserModel } from "../../data/mongo";
 import { AuthDatasource } from "../../domain/datasources/auth.datasource";
@@ -60,8 +60,25 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
   } 
 
-  changePassword(newPassword: string, token: string): Promise<string> {
-    throw new Error("Method not implemented.");
+  async changePassword(newPassword: string, token: string): Promise<string> {
+    
+    const payload = await JwtAdapter.validateToken<{phone: string}>(token);
+
+    if (!payload) throw CustomError.badRequest('Invalid token');
+
+    const userOnDb = await UserModel.findOne({
+      phone: payload.phone
+    });
+
+    if (!userOnDb) throw CustomError.badRequest('User not found');
+
+    const hashedPassword = bcryptAdapter.hash(newPassword);
+
+    const userUpdate = await UserModel.findOneAndUpdate({phone: payload.phone}, {password: hashedPassword});
+
+    if (!userUpdate) throw CustomError.badRequest('There was an error updating the password');
+
+    return 'Password updated successfully';
   }
 
   async verifyUser(type: string, phone:string): Promise<string> {
