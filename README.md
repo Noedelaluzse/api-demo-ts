@@ -13,7 +13,7 @@
 
 ## Lenguaje de programación:
 - **TypeScript**
-
+- **HTML**
 ## Estructura del directorio:
 
 Src:
